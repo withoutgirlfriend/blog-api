@@ -1,0 +1,7 @@
+#忽略依赖
+/node_modules
+
+/.idea/
+/.vscode
+config/index.js
+/build
