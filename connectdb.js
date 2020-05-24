@@ -3,7 +3,8 @@ const {USER_NAME, PASSWORD, HOST, PORT, DATABASE_NAME} = require('./config/index
 const uri = `mongodb://${USER_NAME}:${PASSWORD}@${HOST}:${PORT}/${DATABASE_NAME}`;
 const connect_db = mongoose.connect(uri, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 })
 connect_db.then(res => {
   // console.log(process.env)

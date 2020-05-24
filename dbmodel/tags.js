@@ -6,7 +6,8 @@ const tagSchema = new Schema({
     type: String,
     required: true,
     minLength: 2,
-    maxLength: 10
+    maxLength: 20,
+    unique: true
   },
   state: {//标签状态 0：正常 1：已删除
     type: Number,

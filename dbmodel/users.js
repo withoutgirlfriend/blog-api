@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const sha1 = require('sha1');
 const userSchema = new Schema({
   username: {//用户名
     type: String,
+    required: true,
     default: null,
     minlength: 2,
     maxlength: 20,
@@ -20,13 +21,25 @@ const userSchema = new Schema({
   },
   email: {//邮箱
     type: String,
-    required: true,
-    trim: true
+    trim: true,
+    default: null
   },
   gender: {//性别
     type: String,
     default: '保密',
-    enum: ['男', '女', '保密']
+    enum: ['男', '女', '保密'],
+    required: true
+  },
+  role: {//用户角色
+    type: String,
+    enum: ['root', 'admin', 'normal'],
+    default: 'normal',
+    required: true
+  },
+  state: {//用户状态
+    type: Number,
+    enum: [0, 1],//0代表正常 1代表删除
+    default: 0
   }
 }, {
   //自动获取创建与更新时间
@@ -38,13 +51,17 @@ const userSchema = new Schema({
 
 const userModel = mongoose.model('users', userSchema);
 
-// userModel.create({
-//   password: '18982897450a',
-//   email: 'leesunbeam@qq.com',
-//   gender: '男'
-// }).then(res => {
-//   console.log(res);
-// }).catch(err => {
-//   console.log(err);
-// })
+userModel.find().then(res => {
+  if(res.length === 0) {
+    userModel.create({
+      username: 'root',
+      password: sha1('123456'),
+      role: 'root'
+    }).then(() => {
+      console.log('超级管理员用户已创建！')
+    })
+  }else {
+    console.log('有用户！')
+  }
+})
 module.exports = userModel

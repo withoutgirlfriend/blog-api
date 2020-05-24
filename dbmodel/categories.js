@@ -5,7 +5,8 @@ const categorySchema = new Schema({
     type: String,
     required: true,
     minLength: 2,
-    maxLength: 10
+    maxLength: 10,
+    unique: true
   },
   state: {//分类状态 0正常 1已删除
     type: Number,
